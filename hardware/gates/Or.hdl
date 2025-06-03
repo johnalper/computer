@@ -1,0 +1,21 @@
+// ----------------------------------------------------------------------------
+// Or.hdl
+// Author: John Alper
+// Date: 06/03/2025
+// Description: Or gate implementation
+// ----------------------------------------------------------------------------
+
+/**
+ * Or gate:
+ * if (a or b) out = 1, else out = 0 
+ */
+CHIP Or {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    Not(in=a, out=nota);
+    Not(in=b, out=notb);
+    And(a=nota, b=notb, out=naandnb);
+    Not(in=naandnb, out=out);
+}
