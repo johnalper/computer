@@ -1,0 +1,30 @@
+// ----------------------------------------------------------------------------
+// Mux.hdl
+// Author: John Alper
+// Date: 06/05/2025
+// Description: Mux gate implementation
+// ----------------------------------------------------------------------------
+
+/** 
+ * Multiplexor:
+ * if (sel = 0) out = a, else out = b
+ */
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    Not(in=a, out=na);
+    Not(in=b, out=nb);
+    Not(in=sel, out=nsel);
+    And(a=na, b=b, out=naandb);
+    And(a=a, b=nb, out=aandnb);
+    And(a=a, b=b, out=aandb);
+    And(a=naandb, b=sel, out=naandbsel);
+    And(a=aandnb, b=nsel, out=aandnbnsel);
+    And(a=aandb, b=nsel, out=aandbnsel);
+    And(a=aandb, b=sel, out=aandbsel);
+    Or(a=naandbsel, b=aandnbnsel, out=orone);
+    Or(a=orone, b=aandbnsel, out=ortwo);
+    Or(a=ortwo, b=aandbsel, out=out);
+}
